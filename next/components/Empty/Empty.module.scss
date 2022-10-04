@@ -1,0 +1,13 @@
+.block {
+  width: 100%;
+  text-align: center;
+  // background: #e8e8e8;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  p {
+    max-width: 450px;
+  }
+}

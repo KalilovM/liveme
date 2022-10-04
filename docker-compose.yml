@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./django/:/usr/src/django/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./django/welive/.env
+    depends_on:
+      - db
+    environment:
+      - SQL_DATABASE=liveme
+      - SQL_USER=admin
+      - SQL_PASSWORD=admin
+
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=liveme
+
+  nextjs:
+    build: ./next
+    ports:
+      - 3000:3000
+    depends_on:
+      - web
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
+      - nextjs
+
+volumes:
+  next:
+  postgres_data:
+
+
