@@ -80,12 +80,9 @@ TEMPLATES = [
     },
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://179.61.188.39',
-    'http://127.0.0.1:3000'
-]
+CORS_ORIGIN_ALLOW_ALL = True
 WSGI_APPLICATION = "welive.wsgi.application"
-CSRF_TRUSTED_ORIGINS = ['http://179.61.188.39:1337', 'http://179.61.188.39:80', 'http://179.61.188.39', 'http://179.61.188.39:8000']
+CSRF_TRUSTED_ORIGINS = ['http://179.61.188.39:3000', 'http://179.61.188.39:80', 'http://179.61.188.39', 'http://179.61.188.39:8000']
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = [
     "accept",
@@ -100,7 +97,7 @@ CORS_ALLOW_HEADERS = [
 ]
 
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
-CORS_ALLOW_CREDENTIALS = True
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

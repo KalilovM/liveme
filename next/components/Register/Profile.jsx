@@ -3,7 +3,7 @@ import axios from 'axios';
 import { setLoggedIn } from '../../redux/slices/userSlice';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { OrderBlock, AccountOrder, AccountTabs, AccountDetail } from '../../components/index';
+import { OrderBlock, AccountOrder, AccountTabs, AccountDetail } from '../index';
 import lodash from 'lodash';
 
 const Profile = () => {

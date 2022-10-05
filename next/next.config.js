@@ -1,9 +1,12 @@
+var path = require('path');
+
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   i18n: {
-    locales: ['en', 'ru', 'tr', 'kg'],
+    locales: ['ru', 'en', 'tr', 'kg'],
     defaultLocale: 'ru',
     localeDetection: false,
+    localePath: path.resolve('./public/collections'),
   },
   env: {
     SERVER_DOMAIN: process.env.BACKEND_APP_DOMAIN_NAME,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { OrderBlock } from '../../components/index';
+import { OrderBlock } from '../index';
 import lodash from 'lodash';
 
 export default function AccountOrder({ user }) {

@@ -5,7 +5,7 @@ import lodash from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProducts } from '../redux/slices/productSlice';
 import { BannerArea, Empty } from '../components';
-import { shopText } from './api/collections/shop/shopCollection.js';
+import { shopText } from '../public/collections/shop/shopCollection.js';
 
 const page_size = 6;
 
@@ -31,6 +31,12 @@ export default function Shop() {
         dispatch(setProducts(data.results));
       });
   }, [lang]);
+
+  React.useEffect(() => {
+    axios.get('http://179.61.188.39:8000/api/products/').then(({ data }) => {
+      console.log(data);
+    });
+  }, []);
 
   // React.useEffect(() => {
   //   dispatch(setProducts(data?.results));

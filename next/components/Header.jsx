@@ -1,12 +1,12 @@
 import React from 'react';
-import { Search } from '../components/index';
+import { Search } from './index';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { setLang } from '../redux/slices/langSlice';
 import Image from 'next/image';
-import { text } from '../pages/api/collections/texts.js';
+import { text } from '../public/collections/texts.js';
 
 const languages = ['ru', 'en', 'kg', 'tr'];
 
@@ -33,7 +33,7 @@ export default function Header() {
 
   const onChangeLang = (e) => {
     dispatch(setLang(e.target.value));
-    replace(asPath, asPath, { locale: e.target.value, scroll: false });
+    replace(asPath, asPath, { locale: e.target.value, scroll: false, shallow: true });
   };
 
   return (
