@@ -35,25 +35,15 @@ class ProductImageSerializer(serializers.ModelSerializer):
         
 
 class ProductSerializer(serializers.ModelSerializer):
-    created = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
-    updated = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
-
     class Meta:
         model = Product
         fields = (
             "id",
             "title",
-            "title_ru",
             "description",
-            "description_ru",
             "cover",
-            "brand_id",
             "regular_price",
             "sale_price",
-            "stock",
-            "category_id",
-            "created",
-            "updated",
             "is_published",
             "slug",
         )
@@ -65,6 +55,8 @@ class SingleProductSerializer(serializers.ModelSerializer):
     created = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
     updated = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
     images = ProductImageSerializer(many=True)
+    category = serializers.CharField(source='category.title')
+    brand = serializers.CharField(source='brand.title')
 
     class Meta:
         model = Product
@@ -75,12 +67,12 @@ class SingleProductSerializer(serializers.ModelSerializer):
             "description",
             "description_ru",
             "cover",
-            "brand_id",
+            "brand",
             "images",
             "regular_price",
             "sale_price",
             "stock",
-            "category_id",
+            "category",
             "created",
             "updated",
             "is_published",
