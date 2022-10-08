@@ -8,7 +8,7 @@ import { setLoggedIn } from '../../redux/slices/userSlice.js';
 import { useRouter } from 'next/router.js';
 import Image from 'next/image';
 import loginImg from '../../scss/static/img/login.webp';
-import { profileText } from '../../public/collections/profile/registerCollection.js';
+import { profileText } from '../../public/locales/profile/registerCollection.js';
 
 export default function Login({ setToggle }) {
   const lang = useSelector((state) => state.lang.lang);
@@ -29,10 +29,10 @@ export default function Login({ setToggle }) {
         password: data.password,
       });
       setCookie(null, 'access_token', res.data.user.token.access, {
-        maxAge: 10,
+        maxAge: 30 * 24 * 60 * 60,
       });
       dispatch(setLoggedIn(res.data.user));
-      router.push('/profile');
+      router.reload();
     } catch (err) {
       if (err.response.data) {
         setServerErrors(err.response.data);

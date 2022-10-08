@@ -16,6 +16,7 @@ services:
       - SQL_DATABASE=liveme
       - SQL_USER=admin
       - SQL_PASSWORD=admin
+    restart: always
 
   db:
     image: postgres:13.0-alpine
@@ -25,21 +26,31 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=liveme
+    restart: always
 
   nextjs:
     build: ./next
     ports:
       - 3000:3000
-    depends_on:
-      - web
+    restart: always
 
   nginx:
     build: ./nginx
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - web
       - nextjs
+    restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+    
 
 volumes:
   next:

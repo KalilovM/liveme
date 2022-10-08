@@ -1,3 +1,4 @@
+from itertools import product
 import django_filters
 from rest_framework import permissions
 from rest_framework import viewsets
@@ -45,7 +46,7 @@ class ProductView(viewsets.ModelViewSet):
         return serializer_class
 
     def get_queryset(self):
-        return Product.objects.all()
+        return Product.objects.select_related('brand','category')
 
 
 class ProductImageView(viewsets.ModelViewSet):
@@ -53,7 +54,7 @@ class ProductImageView(viewsets.ModelViewSet):
     serializer_class = ProductImageSerializer
 
     def get_queryset(self):
-        return ProductImage.objects.select_related("product")
+        return ProductImage.objects.prefetch_related('images').values('image')
 
 
 class CategoryView(viewsets.ModelViewSet):

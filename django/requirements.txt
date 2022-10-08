@@ -1,3 +1,4 @@
+django-debug-toolbar==3.7.0
 asgiref==3.5.2
 certifi==2022.9.14
 charset-normalizer==2.1.1

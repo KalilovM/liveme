@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux/slices/cartSlice';
-import { home } from '../../public/collections/home/homeCollection.js';
-import { text } from '../../public/collections/texts.js';
+import { home } from '../../public/locales/home/homeCollection.js';
+import { text } from '../../public/locales/texts.js';
 
 export default function BannerSection() {
   const lang = useSelector((state) => state.lang.lang);
@@ -25,8 +25,8 @@ export default function BannerSection() {
                 </div>
                 <div className="col-lg-5 col-md-6">
                   <div className="banner-content">
-                    <h1>{home.header_area[lang].title}</h1>
-                    <p>{home.header_area[lang].text}</p>
+                    <h1>{home.headerArea.title[lang]}</h1>
+                    <p>{home.headerArea.text[lang]}</p>
                     <div
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
@@ -57,7 +57,7 @@ export default function BannerSection() {
                         </svg>
                       </a>
                       <button className="add-text text-uppercase ">
-                        {text.buttonAddToCart[lang].text}
+                        {text.buttonAddToCart[lang]}
                       </button>
                     </div>
                   </div>

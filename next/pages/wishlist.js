@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Empty, ProductBlock, BannerArea } from '../components';
-import { wishlistText } from '../public/collections/wishlist/wishlistCollection.js';
+import { wishlistText } from '../public/locales/wishlist/wishlistCollection.js';
 
 export default function Wishlist() {
   const items = useSelector((state) => state.wish.items);
@@ -26,7 +26,10 @@ export default function Wishlist() {
             )}
             {items.length > 0 ? (
               <div className="row">
-                {items.length > 0 && items.map((item) => <ProductBlock key={item.id} {...item} />)}
+                {items.length > 0 &&
+                  items.map((item) => (
+                    <ProductBlock className="col-lg-3 col-md-4 col-6" key={item.id} {...item} />
+                  ))}
               </div>
             ) : (
               <Empty title={wishlistText.empty.title} />

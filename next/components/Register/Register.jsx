@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { setLoggedIn } from '../../redux/slices/userSlice.js';
 import loginImg from '../../scss/static/img/login.webp';
 import Image from 'next/image';
-import { profileText } from '../../public/collections/profile/registerCollection.js';
+import { profileText } from '../../public/locales/profile/registerCollection.js';
 
 export default function Register({ setToggle }) {
   const lang = useSelector((state) => state.lang.lang);
@@ -41,10 +41,10 @@ export default function Register({ setToggle }) {
         },
       );
       setCookie(null, 'access_token', res.data.token.access, {
-        maxAge: 24 * 60 * 60,
+        maxAge: 30 * 24 * 60 * 60,
       });
       dispatch(setLoggedIn(res.data));
-      // router.push('/profile');
+      router.reload();
     } catch (err) {
       console.log(err);
       if (err.response.data.username) {

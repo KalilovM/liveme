@@ -8,7 +8,7 @@ urlpatterns = [
     ),
     path("login/", LoginCustomUserApi.as_view(), name="user_login"),
     path(
-        "<int:pk>",
+        "<pk>",
         CustomUserView.as_view(
             {"put": "update", "delete": "destroy", "get": "retrieve"}
         ),

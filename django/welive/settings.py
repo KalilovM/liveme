@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "orders.apps.OrdersConfig",
     "products.apps.ProductsConfig",
+    "debug_toolbar",
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -60,7 +61,18 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK":lambda request:True,
+}
+
+if DEBUG:
+    import socket  # only if you haven't already imported this
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', "179.61.188.39"]
 
 ROOT_URLCONF = "welive.urls"
 
@@ -98,7 +110,7 @@ CORS_ALLOW_HEADERS = [
 
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 
-
+EXTENSIONS_MAX_UNIQUE_QUERY_ATTEMPTS=1000
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 

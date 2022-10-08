@@ -16,36 +16,29 @@ class CategorySerializer(serializers.ModelSerializer):
             "created",
             "updated",
             "is_published",
-            "products",
         )
-
-    def get_products(self, obj):
-        return obj.product_set.all().count()
 
 
 class BrandSerializer(serializers.ModelSerializer):
-    products = serializers.SerializerMethodField()
     created = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
     updated = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
 
     class Meta:
         model = Brand
-        fields = ("title", "image", "created", "updated", "is_published", "products")
+        fields = ("title", "image", "created", "updated", "is_published")
 
-    def get_products(self, obj):
-        return obj.product_set.all().count()
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
         fields = ("image",)
-
+        
 
 class ProductSerializer(serializers.ModelSerializer):
     created = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
     updated = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
-    category = CategorySerializer(read_only=True)
+    category = serializers.PrimaryKeyRelatedField(read_only=False, many=False, queryset=Category.objects.all())
 
     class Meta:
         model = Product
@@ -56,6 +49,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "description",
             "description_ru",
             "cover",
+            "brand",
             "regular_price",
             "sale_price",
             "stock",
@@ -65,12 +59,14 @@ class ProductSerializer(serializers.ModelSerializer):
             "is_published",
             "slug",
         )
+        
+        
 
 
 class SingleProductSerializer(serializers.ModelSerializer):
     created = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
     updated = serializers.DateTimeField(format="%d-%m-%Y %H:%M", read_only=True)
-    category = CategorySerializer(read_only=True)
+    category = serializers.PrimaryKeyRelatedField(read_only=False, many=False, queryset=Category.objects.all())
     images = ProductImageSerializer(many=True)
 
     class Meta:
@@ -82,6 +78,7 @@ class SingleProductSerializer(serializers.ModelSerializer):
             "description",
             "description_ru",
             "cover",
+            "brand",
             "images",
             "regular_price",
             "sale_price",

@@ -1,16 +1,15 @@
 import React from 'react';
-import { Search } from './index';
+import { Search } from '../components/index';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { setLang } from '../redux/slices/langSlice';
-import Image from 'next/image';
-import { text } from '../public/collections/texts.js';
-
-const languages = ['ru', 'en', 'kg', 'tr'];
+import { text } from '../public/locales/texts.js';
+import { setCookie } from 'nookies';
 
 export default function Header() {
+  const languages = ['ru', 'en', 'kg', 'tr'];
   const lang = useSelector((state) => state.lang.lang);
   const { totalItems } = useSelector((state) => state.cart);
   const totalWishes = useSelector((state) => state.wish?.totalItems);
@@ -18,7 +17,6 @@ export default function Header() {
   const [mobileMeniOpen, setMobileMeniOpen] = React.useState(false);
   const searchRef = React.useRef();
   const { replace, pathname, push, asPath } = useRouter();
-  const router = useRouter();
   const dispatch = useDispatch();
   const { loggedIn } = useSelector((state) => state.user);
   const toggleMenu = () => {
@@ -33,7 +31,8 @@ export default function Header() {
 
   const onChangeLang = (e) => {
     dispatch(setLang(e.target.value));
-    replace(asPath, asPath, { locale: e.target.value, scroll: false, shallow: true });
+    setCookie(null, 'NEXT_LOCALE', e.target.value, { maxAge: 30 * 24 * 60 * 60, path: '/' });
+    replace(asPath, asPath, { scroll: false });
   };
 
   return (
@@ -41,9 +40,9 @@ export default function Header() {
       <div className="main_menu">
         <nav className="navbar navbar-expand-lg navbar-light main_box">
           <div className="container">
-            <Link href="/">
+            <Link href="/" onClick={toggleMenu}>
               <a className="navbar-brand logo_h">
-                <Image src={'/livemeLogo1.webp'} width={140} height={45} />
+                <img src={'/livemeLogo1.webp'} width={140} height={45} />
               </a>
             </Link>
             <div className="header-right">

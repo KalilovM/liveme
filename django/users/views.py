@@ -48,6 +48,15 @@ class CustomUserView(viewsets.ModelViewSet):
         if self.action == "retrieve":
             serializer_class = UpdateUserSerializer
         return serializer_class
+    
+    def retrieve(self, *args,**kwargs):
+        if self.kwargs['pk'] == 'me':
+            return Response(CustomUserSerializer(self.request.user).data)
+        else:
+            try:
+                return Response(CustomUserSerializer(CustomUser.objects.get(pk=pk)).data)
+            except:
+                raise Http404
 
 
 class ChangePasswordView(generics.UpdateAPIView):
