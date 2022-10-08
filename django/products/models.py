@@ -64,7 +64,7 @@ class Product(models.Model):
     sale_price = models.FloatField(null=True, blank=True)
     stock = models.IntegerField(default=0, null=True, blank=True)
     category = models.ForeignKey(
-        "Category", on_delete=models.PROTECT, null=True, blank=True
+        "Category", on_delete=models.PROTECT, null=True, blank=True, related_name='products'
     )
     brand = models.ForeignKey("Brand", on_delete=models.PROTECT, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)

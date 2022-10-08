@@ -1,4 +1,3 @@
-from itertools import product
 import django_filters
 from rest_framework import permissions
 from rest_framework import viewsets
@@ -12,6 +11,7 @@ from .serializers import (
 from .filters import ProductFilter
 from .models import Product, ProductImage, Category, Brand
 from rest_framework.pagination import PageNumberPagination
+from django.db.models import Count
 
 
 class LargeResultsSetPagination(PageNumberPagination):
@@ -46,7 +46,7 @@ class ProductView(viewsets.ModelViewSet):
         return serializer_class
 
     def get_queryset(self):
-        return Product.objects.select_related('brand','category')
+        return Product.objects.all().prefetch_related('category','brand')
 
 
 class ProductImageView(viewsets.ModelViewSet):
@@ -58,7 +58,7 @@ class ProductImageView(viewsets.ModelViewSet):
 
 
 class CategoryView(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().annotate(count=Count('products'))
     serializer_class = CategorySerializer
     permission_classes = (permissions.AllowAny,)
 
