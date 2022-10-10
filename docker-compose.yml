@@ -38,22 +38,13 @@ services:
     build: ./nginx
     ports:
       - 80:80
-      - 443:443
     depends_on:
       - web
       - nextjs
     restart: always
-    volumes:
-      - ./nginx/conf/:/etc/nginx/conf.d/:ro
-      - ./certbot/www:/var/www/certbot/:ro
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
     
 
 volumes:
-  next:
   postgres_data:
 
 

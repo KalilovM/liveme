@@ -5,6 +5,7 @@ from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.serializers import ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.http import Http404
 from .models import CustomUser
 from rest_framework import viewsets
 from .serializers import (
@@ -49,12 +50,12 @@ class CustomUserView(viewsets.ModelViewSet):
             serializer_class = UpdateUserSerializer
         return serializer_class
     
-    def retrieve(self, *args,**kwargs):
+    def retrieve(self,*args,**kwargs):
         if self.kwargs['pk'] == 'me':
             return Response(CustomUserSerializer(self.request.user).data)
         else:
             try:
-                return Response(CustomUserSerializer(CustomUser.objects.get(pk=pk)).data)
+                return Response(CustomUserSerializer(CustomUser.objects.get(pk=self.kwargs['pk'])).data)
             except:
                 raise Http404
 

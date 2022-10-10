@@ -20,7 +20,7 @@ services:
     volumes:
       - static_volume:/home/app/web/staticfiles
     ports:
-      - 3000:80
+      - 3000:3000
     depends_on:
       - web
 
