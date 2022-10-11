@@ -1,21 +1,21 @@
 version: '3.8'
 
 services:
-  web:
-    build: ./django
+  liveme_django:
+    build: ./liveme_django
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./django/:/usr/src/django/
+      - ./liveme_django/:/usr/src/liveme_django/
     ports:
       - 8000:8000
     env_file:
-      - ./django/welive/.env
+      - ./liveme_django/welive/.env
     depends_on:
       - db
     environment:
       - SQL_DATABASE=liveme
       - SQL_USER=admin
-      - SQL_PASSWORD=admin
+      - SQL_PASSWORD=NaliPK,nalinaL
     restart: always
 
   db:
@@ -24,12 +24,12 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
+      - POSTGRES_PASSWORD=NaliPK,nalinaL
       - POSTGRES_DB=liveme
     restart: always
 
-  nextjs:
-    build: ./next
+  liveme_next:
+    build: ./liveme_next
     ports:
       - 3000:3000
     restart: always
@@ -39,8 +39,8 @@ services:
     ports:
       - 80:80
     depends_on:
-      - web
-      - nextjs
+      - liveme_django
+      - liveme_next
     restart: always
     
 
