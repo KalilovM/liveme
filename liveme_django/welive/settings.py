@@ -23,6 +23,12 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
+if DEBUG:
+    import socket  # only if you haven't already imported this
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', "179.61.188.39"]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,7 +49,8 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "orders.apps.OrdersConfig",
     "products.apps.ProductsConfig",
-    "silk"
+    "silk",
+    "debug_toolbar",
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -62,6 +69,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'silk.middleware.SilkyMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 

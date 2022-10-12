@@ -12,7 +12,8 @@ urlpatterns = [
     path("api/orders/", include("orders.urls")),
     path("api/token/", TokenObtainPairView.as_view()),
     path("api/token/refresh", TokenRefreshView.as_view()),
-    path('silk/', include('silk.urls', namespace='silk'))
+    path('silk/', include('silk.urls', namespace='silk')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
