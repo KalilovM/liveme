@@ -29,6 +29,10 @@ class ProductView(viewsets.ModelViewSet):
         "title_en",
         "title_tr",
         "category__title",
+        "description_ru",
+        "description_kg",
+        "description_en",
+        "description_tr",
     )
     pagination_class = LargeResultsSetPagination
 
